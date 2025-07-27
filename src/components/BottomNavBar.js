@@ -1,6 +1,6 @@
 // src/components/BottomNavBar.js
 import React from 'react';
-import { Home, Settings } from 'lucide-react';
+import { Home, Settings } from 'lucide-react'; // <-- KODE PERBAIKAN DI SINI
 
 const Icon = ({ component: Component, className }) => <Component className={className} />;
 

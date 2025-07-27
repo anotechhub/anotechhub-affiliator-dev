@@ -1,6 +1,7 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
-import { FileText, Settings, Sun, Moon, User, Bot, Home } from 'lucide-react';
+// Impor ikon dari lucide-react telah dihapus dari sini
+
 import { getCookie, setCookie } from './utils/cookieHelper';
 import { uiTextConfig, systemPrompts } from './config';
 
@@ -14,9 +15,6 @@ import ThankYouModal from './components/ThankYouModal';
 import NotificationModal from './components/NotificationModal';
 import RegenerateModal from './components/RegenerateModal';
 
-// Hapus ApiKeyAppliedModal karena tidak terdefinisi di PDF, jika ada silakan buat file terpisah.
-// import ApiKeyAppliedModal from './components/ApiKeyAppliedModal'; 
-
 export default function App() {
   const [theme, setTheme] = useState('light');
   const [language, setLanguage] = useState('id');
@@ -25,7 +23,6 @@ export default function App() {
   const [error, setError] = useState({ title: '', message: '' });
   const [generatedContent, setGeneratedContent] = useState([]);
   const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
-  // const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false); // Tidak terpakai
   const [isRegenModalOpen, setIsRegenModalOpen] = useState(false);
   const [notification, setNotification] = useState({ isOpen: false, message: '' });
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -86,10 +83,8 @@ export default function App() {
   }, []);
 
   const getApiResponse = async (prompt, schema) => {
-    // ✅ MODIFIKASI KUNCI API DI SINI
     const defaultKey = process.env.REACT_APP_DEFAULT_API_KEY;
     const activeApiKey = apiMode === 'custom' && savedApiKey ? savedApiKey : defaultKey;
-    // 
 
     if (!activeApiKey) {
         throw new Error("API Key is not configured. Please set it in Netlify environment variables or in the app settings.");
@@ -198,13 +193,36 @@ export default function App() {
     setIsRegenModalOpen(true);
   };
 
+  // ===== KODE PERBAIKAN DI FUNGSI INI =====
   const handleModalRegenerate = async (instructions, updatedContent = null) => {
-    const { content, index, type } = regenModalData;
+    const { index } = regenModalData; // Ambil 'index' saja
     if (updatedContent) {
         setGeneratedContent(prev => prev.map((item, i) => i === index ? updatedContent : item));
         return;
     }
-    // ... (rest of the function from the PDF)
+    
+    // Gunakan regenModalData.type dan regenModalData.content secara langsung
+    const originalText = regenModalData.type === 'single'
+      ? `Title: ${regenModalData.content.title}\nProblem: ${regenModalData.content.problem}\nStory: ${regenModalData.content.story}\nCTA: ${regenModalData.content.cta}`
+      : `Title: ${regenModalData.content.title}\nContent: ${regenModalData.content.content}`;
+
+    const regenPrompt = `Revise the following text based on the given instructions.\n\nInstructions: "${instructions}"\n\nOriginal Text:\n${originalText}\n\nProvide only the result in the exact same JSON format as the original. Respond in ${language === 'id' ? 'Indonesian': 'English'}.`;
+
+    const schema = regenModalData.type === 'single'
+      ? { type: "OBJECT", properties: { title: { type: "STRING" }, problem: { type: "STRING" }, story: { type: "STRING" }, cta: { type: "STRING" } }, required: ["title", "problem", "story", "cta"] }
+      : { type: "OBJECT", properties: { title: { type: "STRING" }, content: { type: "STRING" } }, required: ["title", "content"] };
+    
+    try {
+        const parsedJson = await getApiResponse(regenPrompt, schema);
+        if (regenModalData.type === 'carousel') {
+            parsedJson.slide_number = regenModalData.content.slide_number;
+        }
+        return parsedJson;
+    } catch(e) {
+        console.error("Failed to regenerate:", e);
+        alert(`Failed to regenerate: ${e.message}`);
+        return null;
+    }
   };
 
 
@@ -215,7 +233,7 @@ export default function App() {
       scriptCount, setScriptCount, carouselSlideCount, setCarouselSlideCount,
       targetAudience, setTargetAudience, contentType, setContentType, onGenerate: handleGenerate,
       onReset: handleReset, openThankYouModal: () => setIsThankYouModalOpen(true),
-      openRegenModal, uiText, showInitialSetup, setShowInitialSetup, setCurrentPage
+      openRegenModal, uiText, showInitialSetup, setShowInitialSetup, setCurrentPage, language
     };
 
     switch (currentPage) {
@@ -272,7 +290,6 @@ export default function App() {
       />
       {/* Modals */}
       <ThankYouModal isOpen={isThankYouModalOpen} onClose={() => setIsThankYouModalOpen(false)} uiText={uiText} />
-      {/* <ApiKeyAppliedModal isOpen={isApiKeyModalOpen} onClose={() => setIsApiKeyModalOpen(false)} uiText={uiText} /> */}
       <NotificationModal isOpen={notification.isOpen} onClose={() => setNotification({ isOpen: false, message: '' })} message={notification.message} />
       <RegenerateModal 
         isOpen={isRegenModalOpen} 

@@ -1,6 +1,6 @@
 // src/components/Header.js
 import React from 'react';
-import { Bot, Moon, Sun, Coffee, User } from 'lucide-react';
+import { Bot, Moon, Sun, Coffee, User } from 'lucide-react'; // <-- KODE PERBAIKAN DI SINI
 
 const Header = ({ theme, setTheme, language, setLanguage, uiText, onLogoClick, onUserClick }) => (
   <header className="flex items-center justify-between p-4 border-b dark:border-slate-800 border-gray-200/80 sticky top-0 bg-white/70 dark:bg-slate-900/70 backdrop-blur-lg z-10">

@@ -1,6 +1,6 @@
 // src/components/Sidebar.js
 import React from 'react';
-import { FileText, Settings, X } from 'lucide-react';
+import { FileText, Settings, X } from 'lucide-react'; // <-- KODE PERBAIKAN DI SINI
 
 const Icon = ({ component: Component, className }) => <Component className={className} />;
 
