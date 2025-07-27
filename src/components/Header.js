@@ -1,9 +1,9 @@
-// src/components/Header.js
 import React from 'react';
 import { Bot, Sun, Moon, Coffee, User } from 'lucide-react';
 
 const Header = ({ theme, setTheme, language, setLanguage, uiText, onLogoClick, onUserClick }) => (
-    <header className="flex items-center justify-between p-4 border-b dark:border-slate-800 border-gray-200/80 sticky top-0 bg-white/70 dark:bg-slate-900/70 backdrop-blur-lg z-10">
+    // Perubahan ada di baris di bawah ini: z-10 diubah menjadi z-40
+    <header className="flex items-center justify-between p-4 border-b dark:border-slate-800 border-gray-200/80 sticky top-0 bg-white/70 dark:bg-slate-900/70 backdrop-blur-lg z-40">
         <button onClick={onLogoClick} className="flex items-center gap-2">
             <Bot className="w-8 h-8 text-custom-teal"/>
             <h1 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-white">AnoTechHub <span className="hidden sm:inline">Generator</span></h1>
