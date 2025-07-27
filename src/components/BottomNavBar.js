@@ -13,7 +13,8 @@ const BottomNavBar = ({ currentPage, setCurrentPage, uiText }) => {
     ];
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-t border-gray-200 dark:border-slate-800 shadow-t-md p-2 flex justify-around items-center z-20 lg:hidden">
+        // PASTIKAN CLASS DI BAWAH INI SUDAH BENAR
+        <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-t border-gray-200 dark:border-slate-800 shadow-t-md p-2 flex justify-around items-center z-20 hide-on-desktop">
             {navItems.map(item => (
                 <button
                     key={item.id}
