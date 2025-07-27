@@ -1,0 +1,25 @@
+{
+  "files": {
+<<<<<<< HEAD
+    "main.css": "/static/css/main.87a5db2d.css",
+    "main.js": "/static/js/main.38239d2d.js",
+    "index.html": "/index.html",
+    "main.87a5db2d.css.map": "/static/css/main.87a5db2d.css.map",
+    "main.38239d2d.js.map": "/static/js/main.38239d2d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.87a5db2d.css",
+    "static/js/main.38239d2d.js"
+=======
+    "main.css": "/static/css/main.8eb7d13f.css",
+    "main.js": "/static/js/main.941dbfa6.js",
+    "index.html": "/index.html",
+    "main.8eb7d13f.css.map": "/static/css/main.8eb7d13f.css.map",
+    "main.941dbfa6.js.map": "/static/js/main.941dbfa6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8eb7d13f.css",
+    "static/js/main.941dbfa6.js"
+>>>>>>> parent of c89eb7f (Merge pull request #6 from anotechhub/fix/language-variable-issue)
+  ]
+}
