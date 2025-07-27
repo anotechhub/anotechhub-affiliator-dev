@@ -35,7 +35,7 @@ export default function App() {
     const [productName, setProductName] = useState('');
     const [productDesc, setProductDesc] = useState('');
     const [languageStyle, setLanguageStyle] = useState('Storytelling');
-    const [hookType, setHookType] = useState('Problem Call Out');
+    const [hookType, setHookType] = useState('Problem/Agitate/Solve');
     const [contentType, setContentType] = useState('single');
     const [scriptCount, setScriptCount] = useState(1);
     const [carouselSlideCount, setCarouselSlideCount] = useState(5);
@@ -43,7 +43,7 @@ export default function App() {
     
     // State for ThreadsMate
     const [mainIdea, setMainIdea] = useState('');
-    const [threadsHookType, setThreadsHookType] = useState('Problem Call Out');
+    const [threadsHookType, setThreadsHookType] = useState('Problem/Agitate/Solve');
     const [threadsDeliveryStyle, setThreadsDeliveryStyle] = useState('Santai');
     const [threadsCount, setThreadsCount] = useState(5);
     const [threadsTargetAudience, setThreadsTargetAudience] = useState('Profesional Muda');
@@ -88,14 +88,13 @@ export default function App() {
     }, []);
 
     const getApiResponse = async (prompt, schema) => {
-        // PERUBAHAN API KEY - MENGGUNAKAN ENV VARIABLE
         const defaultKeyFromEnv = process.env.REACT_APP_DEFAULT_API_KEY;
         const activeApiKey = apiMode === 'custom' && savedApiKey ? savedApiKey : defaultKeyFromEnv;
         
         if (!activeApiKey || activeApiKey === 'YOUR_DEFAULT_GEMINI_API_KEY') {
-            setError({ title: uiText.errorTitle, message: uiText.errorSetApiKey });
             throw new Error(uiText.errorSetApiKey);
         }
+        
         const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { responseMimeType: "application/json", responseSchema: schema } };
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeApiKey}`;
         const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -141,8 +140,12 @@ export default function App() {
                 setGeneratedContent(parsedJson.slides || []);
                 if (!parsedJson.slides || parsedJson.slides.length === 0) setError({ title: uiText.errorTitle, message: "The AI returned an empty slide list. Try adjusting your inputs." });
             }
-        } catch (e) { console.error(e); if (!error.message) setError({ title: uiText.errorTitle, message: `An error occurred while communicating with the AI: ${e.message}` });
-        } finally { setIsLoading(false); }
+        } catch (e) {
+            console.error(e);
+            setError({ title: uiText.errorTitle, message: e.message });
+        } finally {
+            setIsLoading(false);
+        }
     };
     
     const handleThreadsGenerate = async () => {
@@ -165,7 +168,7 @@ export default function App() {
             }
         } catch (e) {
             console.error(e);
-            if (!error.message) setError({ title: uiText.errorTitle, message: `An error occurred while communicating with the AI: ${e.message}` });
+            setError({ title: uiText.errorTitle, message: e.message });
         } finally {
             setIsLoading(false);
         }
@@ -205,7 +208,10 @@ export default function App() {
         try {
             const parsedJson = await getApiResponse(regenPrompt, schema);
             return parsedJson;
-        } catch(e) { console.error("Failed to regenerate:", e); alert(`Failed to regenerate: ${e.message}`); return null; }
+        } catch(e) {
+            console.error("Failed to regenerate:", e);
+            throw e;
+        }
     };
     
     const showNotification = (message) => { setNotification({ isOpen: true, message }); };
@@ -246,7 +252,6 @@ export default function App() {
 
     return (
         <div className={`min-h-screen font-sans flex flex-col ${theme === 'light' ? 'bg-gray-50 text-gray-800' : 'bg-slate-900 text-gray-200'} transition-colors duration-300`}>
-            <style>{`.bg-custom-teal { background-color: #01a1a8; } .hover\\:bg-custom-teal-dark:hover { background-color: #018a90; } .text-custom-teal { color: #01a1a8; } .dark .dark\\:text-custom-teal-light { color: #5dd4d9; } .ring-custom-teal:focus { --tw-ring-color: #01a1a8; } .border-custom-teal:focus { border-color: #01a1a8; } .bg-custom-teal-active { background-color: #01a1a8 !important; }`}</style>
             <Header theme={theme} setTheme={setTheme} language={language} setLanguage={setLanguage} uiText={uiText} onLogoClick={() => setCurrentPage('affiliator')} onUserClick={() => setIsMobileSidebarOpen(true)} />
             <div className="flex flex-1">
                 <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-20 lg:pb-8">{renderPage()}</main>

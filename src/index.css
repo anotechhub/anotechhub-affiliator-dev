@@ -2,14 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'sans-serif';
-}
+/* Custom App Styles */
+.bg-custom-teal { background-color: #01a1a8; }
+.hover\:bg-custom-teal-dark:hover { background-color: #018a90; }
+.text-custom-teal { color: #01a1a8; }
+.dark .dark\:text-custom-teal-light { color: #5dd4d9; }
+.ring-custom-teal:focus { --tw-ring-color: #01a1a8; }
+.border-custom-teal:focus { border-color: #01a1a8; }
+.bg-custom-teal-active { background-color: #01a1a8 !important; }
 
-.bg-custom-teal-active {
-  background-color: #01a1a8 !important;
-}
-
+/* Responsive layout fix for desktop vs mobile */
 @media (hover: hover) and (pointer: fine) {
   .hide-on-desktop {
     display: none !important;

@@ -1,5 +1,4 @@
 // src/config.js
-
 export const hookTitleMappings = {
     "Problem/Agitate/Solve": { en: "The Core Problem", id: "Inti Masalah" },
     "Before & After": { en: "The Transformation", id: "Transformasi" },
