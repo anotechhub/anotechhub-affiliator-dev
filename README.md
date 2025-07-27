@@ -40,3 +40,7 @@ Aplikasi web berbasis React.js untuk membantu membuat skrip konten afiliasi seca
 ## Deployment
 
 Proyek ini sudah dikonfigurasi untuk deployment di Netlify. Cukup hubungkan repository Git Anda ke Netlify dan pastikan untuk mengatur **Environment Variable** `REACT_APP_DEFAULT_API_KEY`.
+
+
+
+## Anotechhub Stay TechUp
