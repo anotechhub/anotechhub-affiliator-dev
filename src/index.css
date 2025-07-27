@@ -9,3 +9,9 @@ body {
 .bg-custom-teal-active {
   background-color: #01a1a8 !important;
 }
+
+@media (hover: hover) and (pointer: fine) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
