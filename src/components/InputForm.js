@@ -1,4 +1,3 @@
-// src/components/InputForm.js
 import React from 'react';
 import { Bot, RotateCcw, FileDown, ChevronDown } from 'lucide-react';
 
@@ -16,7 +15,8 @@ const InputForm = ({ onGenerate, onReset, isLoading, openThankYouModal, ...props
     productName, setProductName, productDesc, setProductDesc,
     languageStyle, setLanguageStyle, hookType, setHookType, scriptCount,
     setScriptCount, carouselSlideCount, setCarouselSlideCount, targetAudience,
-    setTargetAudience, generatedContent, contentType, setContentType, uiText
+    setTargetAudience, generatedContent, contentType, setContentType, uiText, 
+    language // <-- PENAMBAHAN KUNCI ADA DI SINI
   } = props;
 
   const inputStyle = "w-full p-3 bg-white/60 dark:bg-slate-800/60 border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 ring-custom-teal focus:border-custom-teal outline-none transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-gray-500";
@@ -28,19 +28,14 @@ const InputForm = ({ onGenerate, onReset, isLoading, openThankYouModal, ...props
   const audienceOptions = { en: ["Students", "Young Professionals", "Parents", "Gamers", "Tech Enthusiasts", "Fashion & Beauty", "Fitness & Health", "General"], id: ["Pelajar & Mahasiswa", "Profesional Muda", "Orang Tua", "Gamers", "Penggemar Teknologi", "Fashion & Kecantikan", "Kebugaran & Kesehatan", "Umum"] };
   
   const handlePdfDownload = () => {
-    // PDF generation logic from PDF file 
-    // Note: This logic seems complex and might need debugging.
-    // Ensure jsPDF is loaded correctly via the script tag in App.js
     if (!window.jspdf) {
         alert("PDF library is not loaded yet.");
         return;
     }
-    const { jsPDF } = window.jspdf;
-    // ... (rest of the PDF generation logic would go here)
+    // PDF generation logic would be called here
     console.log("PDF download initiated.");
     openThankYouModal();
   };
-
 
   return (
     <div className="lg:col-span-4 space-y-6">
