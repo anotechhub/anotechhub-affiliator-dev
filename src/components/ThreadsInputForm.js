@@ -1,4 +1,3 @@
-// src/components/ThreadsInputForm.js
 import React from 'react';
 import { Bot, RotateCcw, ChevronDown } from 'lucide-react';
 import { hookTitleMappings } from '../config';
@@ -60,3 +59,6 @@ const ThreadsInputForm = ({ onGenerate, onReset, isLoading, ...props }) => {
         </div>
     );
 };
+
+// TAMBAHKAN BARIS INI DI AKHIR FILE
+export default ThreadsInputForm;
