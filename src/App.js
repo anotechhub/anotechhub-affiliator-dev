@@ -48,6 +48,7 @@ export default function App() {
     const [threadsCount, setThreadsCount] = useState(5);
     const [threadsTargetAudience, setThreadsTargetAudience] = useState('Profesional Muda');
     const [threadsLanguageStyle, setThreadsLanguageStyle] = useState('Informatif');
+    const [threadsContentTheme, setThreadsContentTheme] = useState('Teknologi & AI');
 
     // System Prompts State
     const [affiliatorSystemPrompt, setAffiliatorSystemPrompt] = useState(systemPrompts.affiliator.id);
@@ -91,7 +92,7 @@ export default function App() {
         const defaultKeyFromEnv = process.env.REACT_APP_DEFAULT_API_KEY;
         const activeApiKey = apiMode === 'custom' && savedApiKey ? savedApiKey : defaultKeyFromEnv;
         
-        if (!activeApiKey || activeApiKey === 'YOUR_DEFAULT_GEMINI_API_KEY') {
+        if (!activeApiKey || activeApiKey === 'YOUR_DEFAULT_GEMINI_API_KEY_PLACEHOLDER') {
             throw new Error(uiText.errorSetApiKey);
         }
         
@@ -155,7 +156,7 @@ export default function App() {
         }
         setIsLoading(true); setGeneratedContent([]); setError({ title: '', message: '' });
 
-        const basePromptInfo = `\nMain Content Idea: "${mainIdea}"\nLanguage Style: ${threadsLanguageStyle}\nTarget Audience: ${threadsTargetAudience}\nHook Type to use: "${threadsHookType}"\nDelivery Style: ${threadsDeliveryStyle}. Create a series of ${threadsCount} threads. Respond in ${language === 'id' ? 'Indonesian' : 'English'}.`;
+        const basePromptInfo = `\nContent Theme: "${threadsContentTheme}"\nMain Content Idea: "${mainIdea}"\nLanguage Style: ${threadsLanguageStyle}\nTarget Audience: ${threadsTargetAudience}\nHook Type to use: "${threadsHookType}"\nDelivery Style: ${threadsDeliveryStyle}. Create a series of ${threadsCount} threads. Respond in ${language === 'id' ? 'Indonesian' : 'English'}.`;
         const userPrompt = `Create a Threads series based on the following information:${basePromptInfo}`;
         const schema = { type: "OBJECT", properties: { threads: { type: "ARRAY", items: { type: "OBJECT", properties: { thread_number: { type: "NUMBER" }, content: { type: "STRING" } }, required: ["thread_number", "content"] } } }, required: ["threads"] };
         const finalPrompt = `${savedThreadsSystemPrompt}\n\n${userPrompt}`;
@@ -231,7 +232,7 @@ export default function App() {
     const renderPage = () => {
         const commonProps = { isLoading, generatedContent, error, setError, onReset: handleReset, openThankYouModal: () => setIsThankYouModalOpen(true), openRegenModal, uiText, showInitialSetup, setCurrentPage, language };
         const affiliatorProps = { ...commonProps, productName, setProductName, productDesc, setProductDesc, languageStyle, setLanguageStyle, hookType, setHookType, scriptCount, setScriptCount, carouselSlideCount, setCarouselSlideCount, targetAudience, setTargetAudience, contentType, setContentType, onGenerate: handleAffiliatorGenerate };
-        const threadsMateProps = { ...commonProps, mainIdea, setMainIdea, hookType: threadsHookType, setHookType: setThreadsHookType, deliveryStyle: threadsDeliveryStyle, setDeliveryStyle: setThreadsDeliveryStyle, threadCount: threadsCount, setThreadCount: setThreadsCount, targetAudience: threadsTargetAudience, setTargetAudience: setThreadsTargetAudience, languageStyle: threadsLanguageStyle, setLanguageStyle: setThreadsLanguageStyle, onGenerate: handleThreadsGenerate };
+        const threadsMateProps = { ...commonProps, mainIdea, setMainIdea, hookType: threadsHookType, setHookType: setThreadsHookType, deliveryStyle: threadsDeliveryStyle, setDeliveryStyle: setThreadsDeliveryStyle, threadCount: threadsCount, setThreadCount: setThreadsCount, targetAudience: threadsTargetAudience, setTargetAudience: setThreadsTargetAudience, languageStyle: threadsLanguageStyle, setLanguageStyle: setThreadsLanguageStyle, contentTheme: threadsContentTheme, setContentTheme: setThreadsContentTheme, onGenerate: handleThreadsGenerate };
         const settingsProps = {
             apiMode, setApiMode, userApiKey, setUserApiKey, onSaveApiSettings: handleSaveApiSettings, uiText, setCurrentPage,
             affiliatorSystemPrompt, setAffiliatorSystemPrompt, savedAffiliatorSystemPrompt,
@@ -252,6 +253,7 @@ export default function App() {
 
     return (
         <div className={`min-h-screen font-sans flex flex-col ${theme === 'light' ? 'bg-gray-50 text-gray-800' : 'bg-slate-900 text-gray-200'} transition-colors duration-300`}>
+            {/* Tag <style> telah dipindahkan ke index.css */}
             <Header theme={theme} setTheme={setTheme} language={language} setLanguage={setLanguage} uiText={uiText} onLogoClick={() => setCurrentPage('affiliator')} onUserClick={() => setIsMobileSidebarOpen(true)} />
             <div className="flex flex-1">
                 <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-20 lg:pb-8">{renderPage()}</main>

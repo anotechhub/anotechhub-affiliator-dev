@@ -90,7 +90,7 @@ export const uiTextConfig = {
     copy: "Copy",
     copied: "Copied!",
     mainContentIdea: "Main Content Idea",
-    mainContentIdeaPlaceholder: "e.g., 5 productive tips for programmers working from home",
+    mainContentIdeaPlaceholder: "e.g., 3 AI tools that will change how you work",
     deliveryStyle: "Delivery Style",
     numberOfThreads: "Number of Threads (Series)",
     aboutTitle: "Welcome to AnoTechHub AI Generator",
@@ -106,6 +106,7 @@ export const uiTextConfig = {
     feature4Desc: "Available in both English and Indonesian to reach a wider audience.",
     feature5Title: "Full Customization",
     feature5Desc: "Adjust the language style, target audience, and even the AI's core instructions to get the perfect results.",
+    contentTheme: "Content Theme/Niche",
   },
   id: {
     ...hookTitleMappings,
@@ -184,7 +185,7 @@ export const uiTextConfig = {
     copy: "Salin",
     copied: "Tersalin!",
     mainContentIdea: "Ide Konten Utama",
-    mainContentIdeaPlaceholder: "Contoh: 5 tips produktif bagi programmer yang bekerja dari rumah",
+    mainContentIdeaPlaceholder: "Contoh: 3 tools AI yang akan mengubah cara kerjamu",
     deliveryStyle: "Gaya Penyampaian",
     numberOfThreads: "Jumlah Konten (Series)",
     aboutTitle: "Selamat Datang di AnoTechHub AI Generator",
@@ -200,6 +201,7 @@ export const uiTextConfig = {
     feature4Desc: "Tersedia dalam Bahasa Inggris dan Bahasa Indonesia untuk menjangkau audiens yang lebih luas.",
     feature5Title: "Kustomisasi Penuh",
     feature5Desc: "Sesuaikan gaya bahasa, target audiens, dan bahkan instruksi inti AI untuk mendapatkan hasil yang sempurna.",
+    contentTheme: "Tema/Niche Konten",
   }
 };
 
